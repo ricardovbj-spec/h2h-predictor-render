@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>H2H Predictor - Render</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="logo-title">
+        <h1>H2H Predictor</h1>
+        <span class="tag">Render</span>
+      </div>
+      <p class="subtitle">Selecione liga e confronto para ver a análise completa + palpites do dia</p>
+    </header>
+
+    <!-- Seleção de Liga e Times -->
+    <section class="card card-select">
+      <h2>Selecionar confronto</h2>
+      <div class="select-row">
+        <div class="field">
+          <label for="leagueSelect">Liga</label>
+          <select id="leagueSelect">
+            <option value="">Carregando...</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="homeTeamSelect">Mandante</label>
+          <select id="homeTeamSelect" disabled>
+            <option value="">Selecione...</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="awayTeamSelect">Visitante</label>
+          <select id="awayTeamSelect" disabled>
+            <option value="">Selecione...</option>
+          </select>
+        </div>
+        <div class="field field-button">
+          <button id="analyzeButton" class="btn-primary">Analisar Confronto</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cabeçalho H2H -->
+    <section class="card card-h2h-header">
+      <div class="team-block">
+        <div class="team-logo" id="homeLogo">H</div>
+        <div class="team-info">
+          <div id="homeName" class="team-name">Mandante</div>
+          <div id="homePos" class="team-pos">Posição: -</div>
+        </div>
+      </div>
+
+      <div class="vs-block">
+        <span>H2H</span>
+      </div>
+
+      <div class="team-block">
+        <div class="team-logo" id="awayLogo">A</div>
+        <div class="team-info">
+          <div id="awayName" class="team-name">Visitante</div>
+          <div id="awayPos" class="team-pos">Posição: -</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Probabilidades -->
+    <section class="card">
+      <div class="card-header-row">
+        <h2>Probabilidades de Resultado</h2>
+        <div class="prob-labels">
+          <span id="probHomeLabel">1: -</span>
+          <span id="probDrawLabel">X: -</span>
+          <span id="probAwayLabel">2: -</span>
+        </div>
+      </div>
+      <div class="prob-bar">
+        <div id="probHomeSeg" class="prob-seg prob-home">0%</div>
+        <div id="probDrawSeg" class="prob-seg prob-draw">0%</div>
+        <div id="probAwaySeg" class="prob-seg prob-away">0%</div>
+      </div>
+    </section>
+
+    <!-- Melhor Aposta -->
+    <section class="card card-main-tip">
+      <div class="main-tip-tag" id="mainTipTag">Melhor aposta</div>
+      <div class="main-tip-text" id="mainTipText">
+        Aguarde a análise do confronto para ver o melhor mercado.
+      </div>
+    </section>
+
+    <!-- Gols / Escanteios / Cartões -->
+    <section class="grid-3">
+      <!-- Gols -->
+      <div class="card">
+        <h3>Mercado de Gols</h3>
+        <div class="metric-row">
+          <span>Over 1.5</span>
+          <div class="bar-wrapper">
+            <div id="over15Bar" class="bar-fill"></div>
+          </div>
+          <span id="over15Value" class="metric-value">-</span>
+        </div>
+        <div class="metric-row">
+          <span>Over 2.5</span>
+          <div class="bar-wrapper">
+            <div id="over25Bar" class="bar-fill"></div>
+          </div>
+          <span id="over25Value" class="metric-value">-</span>
+        </div>
+        <div class="metric-row">
+          <span>BTTS</span>
+          <div class="bar-wrapper">
+            <div id="bttsBar" class="bar-fill"></div>
+          </div>
+          <span id="bttsValue" class="metric-value">-</span>
+        </div>
+        <p id="goalsNote" class="note">–</p>
+      </div>
+
+      <!-- Escanteios -->
+      <div class="card">
+        <h3>Escanteios</h3>
+        <div class="metric-row">
+          <span>Média</span>
+          <div class="bar-wrapper">
+            <div id="cornersAvgBar" class="bar-fill"></div>
+          </div>
+          <span id="cornersAvgValue" class="metric-value">-</span>
+        </div>
+        <div class="metric-row">
+          <span>Over 8.5</span>
+          <div class="bar-wrapper">
+            <div id="corners85Bar" class="bar-fill"></div>
+          </div>
+          <span id="corners85Value" class="metric-value">-</span>
+        </div>
+        <div class="metric-row">
+          <span>Over 9.5</span>
+          <div class="bar-wrapper">
+            <div id="corners95Bar" class="bar-fill"></div>
+          </div>
+          <span id="corners95Value" class="metric-value">-</span>
+        </div>
+        <p id="cornersNote" class="note">–</p>
+      </div>
+
+      <!-- Cartões -->
+      <div class="card">
+        <h3>Cartões</h3>
+        <div class="metric-row">
+          <span>Média Total</span>
+          <div class="bar-wrapper">
+            <div id="cardsAvgBar" class="bar-fill"></div>
+          </div>
+          <span id="cardsAvgValue" class="metric-value">-</span>
+        </div>
+        <div class="metric-row">
+          <span>Mandante</span>
+          <div class="bar-wrapper">
+            <div id="cardsHomeBar" class="bar-fill"></div>
+          </div>
+          <span id="cardsHomeValue" class="metric-value">-</span>
+        </div>
+        <div class="metric-row">
+          <span>Visitante</span>
+          <div class="bar-wrapper">
+            <div id="cardsAwayBar" class="bar-fill"></div>
+          </div>
+          <span id="cardsAwayValue" class="metric-value">-</span>
+        </div>
+        <p id="cardsNote" class="note">–</p>
+      </div>
+    </section>
+
+    <!-- Alertas -->
+    <section class="card">
+      <h3>Alertas</h3>
+      <ul id="alertsList" class="alerts-list">
+        <!-- preenchido via JS -->
+      </ul>
+    </section>
+
+    <!-- Histórico H2H -->
+    <section class="card">
+      <h3>Histórico de Confrontos</h3>
+      <ul id="h2hHistoryList" class="history-list">
+        <!-- preenchido via JS -->
+      </ul>
+    </section>
+
+    <!-- Palpites do Dia -->
+    <section class="card">
+      <div class="card-header-row">
+        <h2>Palpites do Dia</h2>
+        <button class="toggle-btn" data-target="palpitesBody">+</button>
+      </div>
+      <div id="palpitesBody" class="collapsible-body">
+        <ul id="palpitesList" class="tips-list">
+          <!-- preenchido via JS -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- Múltiplas -->
+    <section class="card">
+      <div class="card-header-row">
+        <h2>Apostas Múltiplas</h2>
+        <button class="toggle-btn" data-target="multiplasBody">+</button>
+      </div>
+      <div id="multiplasBody" class="collapsible-body">
+        <div class="multi-summary">
+          <span>Seleções: <strong id="multiCount">0</strong></span>
+          <span>Odd Total: <strong id="multiOdd">-</strong></span>
+        </div>
+        <ul id="multiplasList" class="multi-list">
+          <!-- preenchido via JS -->
+        </ul>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <span>H2H Predictor · Render · Dados internos CSV + SofaScore</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
