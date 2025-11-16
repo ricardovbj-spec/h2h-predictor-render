@@ -1,0 +1,31 @@
+
+services:
+  - type: web
+    name: h2h-predictor
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SOFASCORE_BASE_URL
+        value: "https://api.sofascore.com/api/v1"
+      - key: PROXY_PRIMARY
+        sync: false
+      - key: PROXY_SECONDARY
+        sync: false
+
+  - type: worker
+    name: h2h-updater
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python worker.py"
+    envVars:
+      - key: SOFASCORE_BASE_URL
+        value: "https://api.sofascore.com/api/v1"
+      - key: PROXY_PRIMARY
+        sync: false
+      - key: PROXY_SECONDARY
+        sync: false
